@@ -1,0 +1,90 @@
+---
+swagger: "2.0"
+info:
+  description: "\U0001f4aa\U0001f4aa It is an application that calculates the size\
+    \ of files under a directory and returns them in JSON format."
+  version: "0.0.1"
+  title: "Storage Scales"
+  license:
+    name: "MIT License"
+    url: "https://github.com/chidoriashi1990/storage-scales/blob/master/LICENSE"
+basePath: "/v1"
+tags:
+- name: "weight"
+  description: "All operations to get the capacity"
+schemes:
+- "https"
+- "http"
+paths:
+  /weight:
+    get:
+      tags:
+      - "weight"
+      summary: "Returns the total size of the files under a directory."
+      description: ""
+      operationId: "getWeight"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "exclude_paths"
+        description: "To specify when to exclude a specific directory."
+        required: false
+        schema:
+          $ref: "#/definitions/ExcludePath"
+        x-exportParamName: "ExcludePaths"
+      responses:
+        "200":
+          description: "File size"
+          schema:
+            $ref: "#/definitions/WeightResponse"
+        "404":
+          description: "Not Found Directory"
+        "500":
+          description: "Internal Server Error"
+definitions:
+  ExcludePath:
+    type: "array"
+    items:
+      type: "string"
+      format: "string"
+      example: "/misc/share/*/log"
+  WeightResponse:
+    type: "object"
+    properties:
+      target:
+        type: "string"
+        format: "string"
+        example: "/misc/share/App"
+      total:
+        $ref: "#/definitions/Size"
+    example:
+      total:
+        mb: 100.0
+        kb: 102400
+        gb: 0.0977
+      target: "/misc/share/App"
+  Size:
+    type: "object"
+    properties:
+      kb:
+        type: "integer"
+        format: "int64"
+        example: 102400
+      mb:
+        type: "number"
+        format: "float"
+        example: 100.0
+      gb:
+        type: "number"
+        format: "float"
+        example: 0.0977
+    example:
+      mb: 100.0
+      kb: 102400
+      gb: 0.0977
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

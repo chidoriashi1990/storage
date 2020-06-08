@@ -11,19 +11,25 @@ const (
 )
 
 // ToConvertBytes is a function to convert bytes
-func ToConvertBytes(byteVal float32) (status int, converted map[string]interface{}) {
+func ToConvertBytes(byteVal int64) (converted map[string]interface{}) {
+	var byteFloat float32
+	var b int64
 	var kb float32
 	var mb float32
 	var gb float32
 
-	kb = byteVal / BYTE
-	mb = byteVal / KBYTE
-	gb = byteVal / MBYTE
+	byteFloat = float32(byteVal)
+
+	b = byteVal
+	kb = byteFloat / BYTE
+	mb = byteFloat / KBYTE
+	gb = byteFloat / MBYTE
 
 	// debug
 	// fmt.Printf("kb: %g, mb: %g, gb: %g", kb, mb, gb)
 
 	converted = map[string]interface{}{
+		"b":  b,
 		"kb": kb,
 		"mb": mb,
 		"gb": gb,

@@ -61,10 +61,14 @@ func GetWorkingPath() (status int, data []byte) {
 // GetFileSize is ...
 func GetFileSize(root string, ignore []string) (status int, fileSize int64) {
 	status = http.StatusOK
+	fileCount := 0
 	fileSize = 0
 	err := filepath.Walk(
 		root,
 		func(path string, info os.FileInfo, err error) error {
+			if err != nil {
+				return err
+			}
 			// is dir
 			if info.IsDir() {
 				// If you want to ignore a specific directory
@@ -80,8 +84,9 @@ func GetFileSize(root string, ignore []string) (status int, fileSize int64) {
 					return err
 				}
 				if config.Config.IsDebugMode {
-					fmt.Printf("%s %d byte \n", rel, info.Size())
+					fmt.Printf("No.%d %s %d byte \n", fileCount+1, rel, info.Size())
 				}
+				fileCount++
 				fileSize = fileSize + info.Size()
 			}
 			return nil
@@ -91,7 +96,7 @@ func GetFileSize(root string, ignore []string) (status int, fileSize int64) {
 		log.Fatalln(err)
 		return
 	}
-	fmt.Printf("total: %d \n", fileSize)
+	fmt.Printf("total: %d byte \n", fileSize)
 	return
 }
 

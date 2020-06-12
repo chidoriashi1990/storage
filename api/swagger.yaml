@@ -8,6 +8,7 @@ info:
   license:
     name: "MIT License"
     url: "https://github.com/chidoriashi1990/storage-scales/blob/master/LICENSE"
+host: "localhost:8080"
 basePath: "/v1"
 tags:
 - name: "weight"

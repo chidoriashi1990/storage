@@ -29,7 +29,7 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "ignore_paths"
+        name: "paths"
         description: "Specifies which directories to search and which to ignore."
         required: true
         schema:

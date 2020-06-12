@@ -12,6 +12,8 @@ package scales
 import (
 	"log"
 	"net/http"
+
+	config "../config"
 )
 
 // GetWeight Aggregate the size of the files under a directory
@@ -31,8 +33,10 @@ func GetWeight(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Extract from the structure
-	target := reqBody.TargetPath
-	ignore := reqBody.IgnorePaths
+	target := config.Config.BaseDir + reqBody.TargetPath
+	var ignore []string
+	ignore = append(ignore, config.Config.Exclude...)
+	ignore = append(ignore, reqBody.IgnorePaths...)
 
 	// Get file size
 	_, fileSize := GetFileSize(target, ignore)

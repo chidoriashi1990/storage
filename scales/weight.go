@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
+	config "../config"
 )
 
 // FormatResponseData is a function that formats the acquired data to the specified format.
@@ -15,9 +17,11 @@ func FormatResponseData(target string, total map[string]interface{}, ignore []st
 	var err error
 	data, err = json.Marshal(
 		map[string]interface{}{
-			"target": target,
-			"ignore": ignore,
-			"total":  total,
+			"base_dir": config.Config.BaseDir,
+			"exclude":  config.Config.Exclude,
+			"target":   target,
+			"ignore":   ignore,
+			"total":    total,
 		})
 	if err != nil {
 		status = http.StatusInternalServerError
@@ -75,7 +79,9 @@ func GetFileSize(root string, ignore []string) (status int, fileSize int64) {
 				if err != nil {
 					return err
 				}
-				fmt.Printf("%s %d byte \n", rel, info.Size())
+				if config.Config.IsDebugMode {
+					fmt.Printf("%s %d byte \n", rel, info.Size())
+				}
 				fileSize = fileSize + info.Size()
 			}
 			return nil

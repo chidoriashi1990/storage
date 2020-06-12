@@ -8,8 +8,10 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "env": {
-                "BASE_DIR": "/var/log",
-                "EXCLUDE": ""
+                "ACCESS_CONTROL_ALLOW_ORIGIN": "http://localhost",
+                "BASE_DIR": "/var",
+                "EXCLUDE": [],
+                "IS_DEBUG_MODE": true
             },
             "args": []
         }

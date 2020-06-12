@@ -16,3 +16,6 @@
 
 # Debug
 __debug_bin
+
+# Hidden Files
+.DS_Store

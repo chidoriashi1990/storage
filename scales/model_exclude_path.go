@@ -11,7 +11,6 @@ package scales
 
 // ExcludePath Path of the directory to exclude.
 type ExcludePath struct {
-	TargetPath string `json:"target_path,omitempty"`
-
+	TargetPath  string   `json:"target_path,omitempty"`
 	IgnorePaths []string `json:"ignore_paths,omitempty"`
 }

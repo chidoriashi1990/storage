@@ -61,16 +61,23 @@ func GetFileSize(root string, ignore []string) (status int, fileSize int64) {
 	err := filepath.Walk(
 		root,
 		func(path string, info os.FileInfo, err error) error {
+			// is dir
 			if info.IsDir() {
-				// 特定のディレクトリ以下を無視する場合は
+				// If you want to ignore a specific directory
 				if sliceContain(ignore, info.Name()) {
 					return filepath.SkipDir
 				}
 				return nil
 			}
-			rel, err := filepath.Rel(root, path)
-			fmt.Printf("%s %d byte \n", rel, info.Size())
-			fileSize = fileSize + info.Size()
+			// To ignore a specific file
+			if !sliceContain(ignore, info.Name()) {
+				rel, err := filepath.Rel(root, path)
+				if err != nil {
+					return err
+				}
+				fmt.Printf("%s %d byte \n", rel, info.Size())
+				fileSize = fileSize + info.Size()
+			}
 			return nil
 		})
 	if err != nil {

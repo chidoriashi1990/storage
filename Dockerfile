@@ -14,5 +14,8 @@ WORKDIR /app
 COPY --from=build-env /app/serve.out .
 ENV TZ=Asia/Tokyo
 
+WORKDIR /share/misc
+WORKDIR /app
+
 EXPOSE 8080
 CMD ["./serve.out"]

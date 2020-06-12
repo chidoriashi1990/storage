@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${fileDirname}",
+            "env": {
+                "ACCESS_CONTROL_ALLOW_ORIGIN": "http://localhost",
+                "BASE_DIR": "/var",
+                "EXCLUDE": [],
+                "IS_DEBUG_MODE": true
+            },
+            "args": []
+        }
+    ]
+}

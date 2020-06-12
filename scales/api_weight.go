@@ -10,11 +10,44 @@
 package scales
 
 import (
+	"log"
 	"net/http"
+
+	config "../config"
 )
 
 // GetWeight Aggregate the size of the files under a directory
 func GetWeight(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
+	w.Header().Set("Access-Control-Allow-Origin", config.Config.AccessControlAllowOrigin)
+
+	// Initialize
+	status := http.StatusOK
+	var total map[string]interface{}
+	resBody := []byte("")
+
+	reqBody, err := BodyToJSON(w, r)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		log.Fatal(err)
+		return
+	}
+
+	// Extract from the structure
+	target := config.Config.BaseDir + reqBody.TargetPath
+	var ignore []string
+	ignore = append(ignore, config.Config.Exclude...)
+	ignore = append(ignore, reqBody.IgnorePaths...)
+
+	// Get file size
+	_, fileSize := GetFileSize(target, ignore)
+	total = ToConvertBytes(fileSize)
+
+	// Response body
+	if status == http.StatusOK {
+		status, resBody = FormatResponseData(target, total, ignore)
+	}
+
+	w.WriteHeader(status)
+	w.Write(resBody)
 }

@@ -61,7 +61,7 @@ var routes = Routes{
 
 	Route{
 		"GetWeight",
-		strings.ToUpper("Get"),
+		strings.ToUpper("Post"),
 		"/v1/weight",
 		GetWeight,
 	},

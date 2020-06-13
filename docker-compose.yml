@@ -7,7 +7,7 @@ services:
       dockerfile: ./Dockerfile
     image: storage-scale:latest
     container_name: storage-scale
-    ports: 
+    ports:
       - 8080:8080
     environment: 
       ACCESS_CONTROL_ALLOW_ORIGIN: "http://localhost"
@@ -15,4 +15,4 @@ services:
       EXCLUDE: ignore,ignore2
       IS_DEBUG_MODE: "false"
     volumes: 
-      - /Users/yusuke.miyakawa/App/storage-test:/share/misc
+      - /tmp:/share/misc

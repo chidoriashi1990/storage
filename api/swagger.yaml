@@ -8,6 +8,7 @@ info:
   license:
     name: "MIT License"
     url: "https://github.com/chidoriashi1990/storage-scales/blob/master/LICENSE"
+host: "localhost:8080"
 basePath: "/v1"
 tags:
 - name: "weight"
@@ -17,7 +18,7 @@ schemes:
 - "http"
 paths:
   /weight:
-    get:
+    post:
       tags:
       - "weight"
       summary: "Returns the total size of the files under a directory."
@@ -29,9 +30,9 @@ paths:
       - "application/json"
       parameters:
       - in: "body"
-        name: "exclude_paths"
-        description: "To specify when to exclude a specific directory."
-        required: false
+        name: "paths"
+        description: "Specifies which directories to search and which to ignore."
+        required: true
         schema:
           $ref: "#/definitions/ExcludePath"
         x-exportParamName: "ExcludePaths"
@@ -46,26 +47,39 @@ paths:
           description: "Internal Server Error"
 definitions:
   ExcludePath:
-    type: "array"
-    items:
-      type: "string"
-      format: "string"
-      example: "/misc/share/*/log"
+    type: "object"
+    properties:
+      target_path:
+        type: string
+        format: string
+        example: "/misc/share/app1"
+      ignore_paths:
+        type: "array"
+        items:
+          type: string
+          format: string
+          example: "/misc/share/*/log"
   WeightResponse:
     type: "object"
     properties:
+      ignore:
+        type: array
+        items:
+          type: string
       target:
-        type: "string"
-        format: "string"
+        type: string
         example: "/misc/share/App"
       total:
         $ref: "#/definitions/Size"
     example:
+      ignore:
+        - ".git"
+        - "README.md"
+      target: "/misc/share/App"
       total:
         mb: 100.0
         kb: 102400
         gb: 0.0977
-      target: "/misc/share/App"
   Size:
     type: "object"
     properties:

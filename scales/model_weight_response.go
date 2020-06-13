@@ -11,6 +11,7 @@ package scales
 
 // WeightResponse /weight response struct
 type WeightResponse struct {
-	Target string `json:"target,omitempty"`
-	Total  *Size  `json:"total,omitempty"`
+	Ignore []string `json:"ignore,omitempty"`
+	Target string   `json:"target,omitempty"`
+	Total  *Size    `json:"total,omitempty"`
 }

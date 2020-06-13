@@ -67,6 +67,26 @@ curl -i -X POST \
  'http://localhost:8080/v1/weight'
 ```
 
+### Response
+```json
+{
+    "base_dir": "/tmp/storage",
+    "exclude":[],
+    "ignore":[
+        ".git",
+        ".DS_Store",
+        "__debug_bin"
+    ],
+    "target": "/tmp/storage/scales",
+    "total":{
+        "b": 18847,
+        "gb": 0.000017552637,
+        "kb": 18.405273,
+        "mb": 0.0179739
+    }
+}
+```
+
 ## Document
 Import the following YAML file into the [Swagger Editor](https://editor.swagger.io/).
 - [Storage Scales](./api/swagger.yaml)
